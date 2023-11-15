@@ -10,7 +10,7 @@ function Page1(){
                 circleFillPercent={100}
                 percentText={0}
                 questionText={"How are you feeling today?"}
-                questionNumber={"1"}
+                questionNumber={1}
             />
         </>
     )

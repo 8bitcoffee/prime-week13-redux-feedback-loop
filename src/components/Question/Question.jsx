@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 function Question(topProps){
     const [rating, setRating] = useState("");
     const dispatch = useDispatch();
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch({
@@ -20,6 +21,7 @@ function Question(topProps){
             payload: rating
         });
         setRating("");
+        window.location.href = `/#/${Number(topProps.questionNumber) + 1}`;
     }
 
     function CircularProgressWithLabel(props) {
@@ -61,12 +63,15 @@ function Question(topProps){
                         One is TERRIBLE. Ten is AMAZING!
                     </Typography>
                     <br></br>
-                    <Box component="form"
+                    <Box
+                        component="form"
                         sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' },}}
                         noValidate
                         autoComplete="off">
                         <TextField
+                            required={true}
                             value={rating}
+                            type="number"
                             id="outlined-required"
                             label="*Required"
                             placeholder="1-10"
