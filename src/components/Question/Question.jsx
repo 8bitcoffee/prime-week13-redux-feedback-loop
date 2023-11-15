@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './Question.css';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
@@ -51,6 +50,7 @@ function Question(topProps){
             <Card sx={{maxwidth: 550}}>
                 <CardContent>
                     <CircularProgressWithLabel value={topProps.circleFillPercent} />
+                    <br></br>
                     <Typography gutterBottom variant="h5" component="div">
                         {topProps.questionText}
                     </Typography>
@@ -72,6 +72,7 @@ function Question(topProps){
                             placeholder="1-10"
                             onChange={(e)=>setRating(e.target.value)}
                         />
+                        <br></br>
                         <Button onClick={handleSubmit} variant="contained" id="submit-btn">Submit</Button>
                     </Box>
                 </CardContent>
