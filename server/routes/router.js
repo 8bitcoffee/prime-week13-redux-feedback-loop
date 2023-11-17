@@ -17,7 +17,7 @@ router.get('/feedback', (req, res) => {
 router.post('/feedback', (req,res) => {
     let queryText = `INSERT INTO "feedback" ("feeling", "understanding", "support", "grade", "comments")
     VALUES ($1, $2, $3, $4, $5)`;
-    pool.query(queryText, [req.question1, req.question2, req.question3, req.question4, req.question5]).then(() =>{
+    pool.query(queryText,[req.body[0]['rating'], req.body[1]['rating'], req.body[2]['rating'], req.body[3]['rating'], req.body[4]['rating']]).then(() =>{
         res.sendStatus(201);
         console.log("POST to '/feedback'");
     })
@@ -26,6 +26,5 @@ router.post('/feedback', (req,res) => {
         alert("Error in POST '/feedback'. See console.");
     })
 })
-
 
 module.exports = router;

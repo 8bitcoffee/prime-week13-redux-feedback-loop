@@ -59,7 +59,7 @@ function App() {
         <Route exact path='/3'><Page3/></Route>
         <Route exact path='/4'><Page4/></Route>
         <Route exact path='/5'><Page5/></Route>
-        <Route exact path='/review'><Review/></Route>
+        <Route exact path='/review'><Review getResponses={getResponses}/></Route>
         <Route exact path='/submitted'><Submitted/></Route>
         <Route exact path='/admin'><Admin/></Route>
       </Router>

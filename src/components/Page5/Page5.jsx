@@ -18,7 +18,7 @@ function Page5(){
         e.preventDefault();
         dispatch({
             type: `QUESTION_5`,
-            payload: comments
+            payload: {question: "Comments:", rating: comments}
         });
         setComments("");
         window.location.href = `/#/review`;
@@ -74,7 +74,7 @@ function Page5(){
                             onChange={(e)=>setComments(e.target.value)}
                         />
                         <br></br>
-                        <Button onClick={handleSubmit} variant="contained" id="submit-btn">Submit</Button>
+                        <Button onClick={handleSubmit} variant="contained" id="submit-btn">Next</Button>
                     </Box>
                 </CardContent>
             </Card>
