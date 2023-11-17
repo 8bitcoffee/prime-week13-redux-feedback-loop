@@ -25,15 +25,30 @@ const feedback = (state = {}, action) => {
         console.log("Question four:", action.payload);
         return {...state, question4: action.payload};
     }
-    else if (action.type === "RESET"){
+    else if (action.type === "QUESTION_5"){
+        console.log("Question four:", action.payload);
+        return {...state, question4: action.payload};
+    }
+    else if (action.type === "SUBMIT"){
         return {};
+    }
+    return state;
+}
+
+const responses = (state = [], action) => {
+    if (action.type === "SUBMIT"){
+        return [...state, action.payload];
+    }
+    else if (action.type === "GET_RESPONSES"){
+        return action.payload;
     }
     return state;
 }
 
 const reduxStore = createStore(
     combineReducers({
-        feedback
+        feedback,
+        responses
     }),
     applyMiddleware(logger)
 )

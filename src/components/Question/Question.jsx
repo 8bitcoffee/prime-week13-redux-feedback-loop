@@ -9,8 +9,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 function Question(topProps){
+    let history = useHistory();
     const [rating, setRating] = useState("");
     const dispatch = useDispatch();
     
@@ -21,7 +23,7 @@ function Question(topProps){
             payload: rating
         });
         setRating("");
-        window.location.href = `/#/${Number(topProps.questionNumber) + 1}`;
+        history.push(`/${Number(topProps.questionNumber) + 1}`)
     }
 
     function CircularProgressWithLabel(props) {
