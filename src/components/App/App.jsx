@@ -10,8 +10,30 @@ import Page5 from '../Page5/Page5';
 import Review from '../Review/Review';
 import Submitted from '../Submitted/Submitted';
 import Admin from '../Admin/Admin';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  const getResponses = () =>{
+    axios.get('/feedback').then((response) => {
+      console.log(`GET from '/feedback`);
+      dispatch({
+        type: "GET_RESPONSES",
+        payload: response.data
+      })
+    })
+    .catch((error) => {
+      console.error("Error in GET '/feedback'.", error);
+      alert("Error in GET '/feedback'. See console.");
+    })
+  }
+
+  useEffect(()=>{
+    getResponses();
+  },[]);
 
   return (
     <div className='App'>

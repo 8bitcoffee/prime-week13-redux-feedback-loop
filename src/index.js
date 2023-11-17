@@ -26,8 +26,8 @@ const feedback = (state = {}, action) => {
         return {...state, question4: action.payload};
     }
     else if (action.type === "QUESTION_5"){
-        console.log("Question four:", action.payload);
-        return {...state, question4: action.payload};
+        console.log("Question five:", action.payload);
+        return {...state, question5: action.payload};
     }
     else if (action.type === "SUBMIT"){
         return {};
@@ -36,10 +36,7 @@ const feedback = (state = {}, action) => {
 }
 
 const responses = (state = [], action) => {
-    if (action.type === "SUBMIT"){
-        return [...state, action.payload];
-    }
-    else if (action.type === "GET_RESPONSES"){
+    if (action.type === "GET_RESPONSES"){
         return action.payload;
     }
     return state;
