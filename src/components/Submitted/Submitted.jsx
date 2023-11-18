@@ -8,10 +8,9 @@ function Submitted(){
     return(
         <div>
             <h3>Woooo!!! You did it!</h3>
-            <h6>Here's a pic because you're one cool cat.</h6>
+            <p>Here's a pic because you're one cool cat.</p>
             <img src='images/cool-cat.jpg'/>
-            <h6>If you want to submit more feedback,</h6>
-            <h6>click here to start a new form.</h6>
+            <p>If you want to submit more feedback, click here to start a new form.</p>
             <button onClick={()=>history.push('/')}>Submit more feedback!</button>
         </div>
     )

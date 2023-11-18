@@ -29,11 +29,15 @@ function Review(props){
         axios.post('/feedback',feedback).then((response) =>{
             console.log("Feedback submitted.", feedback);
             props.getResponses();
+            dispatch({
+                type: `SUBMIT`,
+            })
+            history.push(`/submitted`);
         })
-        dispatch({
-            type: `SUBMIT`,
-        });
-        history.push(`/submitted`);
+        .catch((error) => {
+            console.error("Error in POST to '/feedback'.", error);
+            alert("Error in POST to '/feedback'. See console");
+        })
     }
 
     function CircularProgressWithLabel(props) {

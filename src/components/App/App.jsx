@@ -61,7 +61,7 @@ function App() {
         <Route exact path='/5'><Page5/></Route>
         <Route exact path='/review'><Review getResponses={getResponses}/></Route>
         <Route exact path='/submitted'><Submitted/></Route>
-        <Route exact path='/admin'><Admin/></Route>
+        <Route exact path='/admin'><Admin getResponses={getResponses}/></Route>
       </Router>
     </div>
   );
