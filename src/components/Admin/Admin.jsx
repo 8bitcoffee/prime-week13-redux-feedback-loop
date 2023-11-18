@@ -1,13 +1,10 @@
 import React from 'react';
 import './Admin.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -19,10 +16,7 @@ import axios from 'axios';
 
 
 function Admin(props){
-    let history = useHistory();
-    const feedback = useSelector(store => store.feedback);
     const responses = useSelector(store => store.responses);
-    const dispatch = useDispatch();
     
     const handleSubmit = (id) => {
         axios.delete(`/feedback/${id}`).then((response) =>{
@@ -38,11 +32,11 @@ function Admin(props){
 
     return(
         <div>
-            <Card sx={{maxwidth: 550}}>
+            <Card sx={{maxwidth: "90vw"}}>
                 <CardContent>
                     <br></br>
                     <Typography gutterBottom variant="h4" component="div">
-                        Your Responses:
+                        Responses:
                     </Typography>
                     <br></br>
                     <TableContainer component={Paper}>
@@ -64,7 +58,7 @@ function Admin(props){
                                         <TableCell align="center">{response.understanding}</TableCell>
                                         <TableCell align="center">{response.support}</TableCell>
                                         <TableCell align="center">{response.grade}</TableCell>
-                                        <TableCell align="center">{response.comments}</TableCell>
+                                        <TableCell align="left">{response.comments}</TableCell>
                                         <TableCell align="center">
                                             <Button onClick={()=>handleSubmit(response.id)} variant="contained" id="submit-btn">Delete</Button>
                                         </TableCell>
