@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
-import Paper from '@mui/material/Paper';
 
 function Question(topProps){
     let history = useHistory();
@@ -19,12 +18,17 @@ function Question(topProps){
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch({
-            type: `QUESTION_${topProps.questionNumber}`,
-            payload: {question: topProps.questionText, rating: Number(rating)}
-        });
-        setRating("");
-        history.push(`/${Number(topProps.questionNumber) + 1}`)
+        if (Number(rating) > 0 && Number(rating) <= 10 && Number.isInteger(Number(rating))){
+            dispatch({
+                type: `QUESTION_${topProps.questionNumber}`,
+                payload: {question: topProps.questionText, rating: Number(rating)}
+            });
+            setRating("");
+            history.push(`/${Number(topProps.questionNumber) + 1}`)
+        }
+        else {
+            alert("Rating must be an integer 1-10");
+        }
     }
 
     function CircularProgressWithLabel(props) {

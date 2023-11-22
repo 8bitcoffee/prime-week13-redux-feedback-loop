@@ -32,6 +32,21 @@ const feedback = (state = [{},{},{},{},{}], action) => {
     else if (action.type === "SUBMIT"){
         return [{},{},{},{},{}];
     }
+    else if (action.type === "UPDATE_FEEDBACK"){
+        let idx = 0;
+        let retArray = []
+        for (let response of action.payload){
+            console.log(response);
+            if (response.rating != ""){
+                retArray.push(response);
+            }
+            else{
+                retArray.push(state[idx]);
+            }
+            idx += 1;
+        }
+        return retArray;
+    }
     return state;
 }
 

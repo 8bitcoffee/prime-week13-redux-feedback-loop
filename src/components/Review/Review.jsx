@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import './Review.css';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
@@ -14,18 +15,24 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
 
 function Review(props){
     let history = useHistory();
     const feedback = useSelector(store => store.feedback);
+    const [newFeedback, setNewFeedback] = useState([
+        {question: "How are you feeling today?",rating: ""},
+        {question: "How well are you understanding the content?",rating: ""},
+        {question: "How well are you being supported?",rating: ""},
+        {question: "How well are you going to grade this assignment?",rating: ""},
+        {question: "Comments:",rating: ""}
+    ]);
     const dispatch = useDispatch();
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(feedback);
-        console.log(feedback[0]["rating"]);
         axios.post('/feedback',feedback).then((response) =>{
             console.log("Feedback submitted.", feedback);
             props.getResponses();
@@ -38,6 +45,28 @@ function Review(props){
             console.error("Error in POST to '/feedback'.", error);
             alert("Error in POST to '/feedback'. See console");
         })
+    }
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        dispatch({
+            type: "UPDATE_FEEDBACK",
+            payload: newFeedback
+        });
+        setNewFeedback([
+            {question: "How are you feeling today?",rating: ""},
+            {question: "How well are you understanding the content?",rating: ""},
+            {question: "How well are you being supported?",rating: ""},
+            {question: "How well are you going to grade this assignment?",rating: ""},
+            {question: "Comments:",rating: ""}
+        ]);
+    }
+
+    const handleChange = (index, rating)=>{
+        let newArray = [...newFeedback];
+        newArray[index]["rating"] = rating;
+        console.log(newArray);
+        setNewFeedback(newArray);
     }
 
     function CircularProgressWithLabel(props) {
@@ -79,13 +108,41 @@ function Review(props){
                                 <TableRow>
                                     <TableCell align="left">Question</TableCell>
                                     <TableCell align="right">Rating</TableCell>
+                                    <TableCell align="center">New Rating</TableCell>
+                                    <TableCell align="center">Update</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {feedback.map((response, index) => 
                                     <TableRow key={index}>
                                         <TableCell align="left">{response.question}</TableCell>
-                                        <TableCell align="right">{response.rating}</TableCell>
+                                        <TableCell align="center">{response.rating}</TableCell>
+                                        <TableCell align="center">
+                                           {response.question == "Comments:" ?
+                                                <TextField
+                                                    multiline
+                                                    rows ={8}
+                                                    required={false}
+                                                    value={newFeedback[index].rating}
+                                                    type="text"
+                                                    id="outlined"
+                                                    label="Comments"
+                                                    placeholder="Comments"
+                                                    onChange={(e)=>handleChange(index, e.target.value)}
+                                                /> :
+                                                <TextField
+                                                    required={false}
+                                                    value={newFeedback[index].rating}
+                                                    type="number"
+                                                    id="outlined-required"
+                                                    label="1-10"
+                                                    placeholder="1-10"
+                                                    onChange={(e)=>handleChange(index, Number(e.target.value))}
+                                                />}
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Button onClick={handleUpdate} variant="contained" id="update-btn">Update Rating</Button>
+                                        </TableCell>
                                     </TableRow>
                                 )}
                             </TableBody>
