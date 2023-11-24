@@ -4,11 +4,6 @@
 -- Table to store the feedback
 CREATE TABLE "feedback" (
   "id" serial primary key,
-  "feeling" INT not null,
-  "understanding" INT not null,
-  "support" INT not null,
-  "grade" INT not null,
-  "comments" text,
   "flagged" boolean default false,
   "date" date not null default CURRENT_DATE
 ); 
@@ -16,3 +11,17 @@ CREATE TABLE "feedback" (
 -- Sample feedback item
 INSERT INTO "feedback" ("feeling", "understanding", "support", "grade", "comments")
 VALUES (4, 4, 5, 10, 'Doing Great!');
+
+CREATE TABLE "questions" (
+  "id" serial primary key,
+  "question" text not null,
+  "required" boolean default false,
+  "type" text not null
+)
+
+INSERT INTO "questions" ("question", "required", "type")
+VALUES ("How are you feeling today?", true, "rating"),
+("How well are you understanding the content?", true, "rating"),
+("How well are you being supported?", true, "rating"),
+("How well are you going to grade this assignment?", true, "rating"),
+("Any additional comments?", false, "text");

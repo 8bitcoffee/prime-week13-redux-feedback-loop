@@ -10,6 +10,7 @@ import Page5 from '../Page5/Page5';
 import Review from '../Review/Review';
 import Submitted from '../Submitted/Submitted';
 import Admin from '../Admin/Admin';
+import SetQuestions from '../SetQuestions/SetQuestions';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -52,6 +53,7 @@ function App() {
             <li><Link to='/review'>Review</Link></li>
             <li><Link to='/submitted'>Submitted</Link></li>
             <li><Link to='/admin'>Admin</Link></li>
+            <li><Link to='/setquestions'>Set Questions</Link></li>
           </ul>
         </nav>
         <Route exact path='/'><Page1/></Route>
@@ -62,6 +64,7 @@ function App() {
         <Route exact path='/review'><Review getResponses={getResponses}/></Route>
         <Route exact path='/submitted'><Submitted/></Route>
         <Route exact path='/admin'><Admin getResponses={getResponses}/></Route>
+        <Route exact path='/setquestions'><SetQuestions></SetQuestions></Route>
       </Router>
     </div>
   );
