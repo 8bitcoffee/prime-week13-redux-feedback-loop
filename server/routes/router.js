@@ -27,6 +27,19 @@ router.post('/feedback', (req,res) => {
     })
 })
 
+router.put('/feedback/:id', (req,res) => {
+    let queryText = `UPDATE "feedback" SET "flagged" = NOT "flagged"
+    WHERE "id" = $1;`;
+    pool.query(queryText,[req.params.id]).then((result) =>{
+        res.sendStatus(200);
+        console.log("PUT to '/feedback'");
+    })
+    .catch((error) => {
+        console.error(`Error in PUT to '/feedback'.`, error);
+        alert("Error in PUT '/feedback'. See console.");
+    })
+})
+
 router.delete('/feedback/:id', (req,res) => {
     pool.query('DELETE FROM "feedback" WHERE id=$1', [req.params.id]).then((result) => {
         console.log(`DELETE at '/feedback/${req.params.id}'`);
@@ -36,6 +49,9 @@ router.delete('/feedback/:id', (req,res) => {
         res.sendStatus(500);
     })
 })
+
+
+// -----------------
 
 router.post('/questions', (req,res) => {
     let queryText = `INSERT INTO "questions" ("question", "required", "type")
