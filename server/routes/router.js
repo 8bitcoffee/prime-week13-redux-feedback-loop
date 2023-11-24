@@ -37,4 +37,39 @@ router.delete('/feedback/:id', (req,res) => {
     })
 })
 
+router.post('/questions', (req,res) => {
+    let queryText = `INSERT INTO "questions" ("question", "required", "type")
+    VALUES ($1, $2, $3)`;
+    pool.query(queryText,[req.body.question, req.body.required, req.body.type]).then(() =>{
+        res.sendStatus(201);
+        console.log("POST to '/questions'");
+    })
+    .catch((error) => {
+        console.error(`Error in POST to '/questions'.`, error);
+        alert("Error in POST '/questions'. See console.");
+    })
+})
+
+router.get('/questions', (req,res) => {
+    pool.query(`SELECT * FROM "questions"`).then((result) =>{
+        res.send(result.rows);
+        console.log("GET from '/questions'");
+    })
+    .catch((error) => {
+        console.error(`Error in GET '/questions'. DB query failed`, error);
+        alert(`Error in GET '/questions'. See console.`);
+        res.sendStatus(500);
+    })
+})
+
+router.delete('/questions/:id', (req,res) => {
+    pool.query('DELETE FROM "questions" WHERE id=$1', [req.params.id]).then((result) => {
+        console.log(`DELETE at '/questions/${req.params.id}'`);
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.error(`Error in DELETE '/questions/:id'.`, error);
+        res.sendStatus(500);
+    })
+})
+
 module.exports = router;

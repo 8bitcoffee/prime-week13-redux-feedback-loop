@@ -32,8 +32,23 @@ function App() {
     })
   }
 
+  const getQuestions = () => {
+    axios.get('/questions').then((response) => {
+      console.log("GET from '/questions'");
+      dispatch({
+        type: "GET_QUESTIONS",
+        payload: response.data
+      })
+    })
+    .catch((error) => {
+      console.error("Error in GET '/questions'.", error);
+      alert("Error in GET '/questions'. See console.");
+    })
+  }
+
   useEffect(()=>{
     getResponses();
+    getQuestions();
   },[]);
 
   return (
@@ -64,7 +79,7 @@ function App() {
         <Route exact path='/review'><Review getResponses={getResponses}/></Route>
         <Route exact path='/submitted'><Submitted/></Route>
         <Route exact path='/admin'><Admin getResponses={getResponses}/></Route>
-        <Route exact path='/setquestions'><SetQuestions></SetQuestions></Route>
+        <Route exact path='/setquestions'><SetQuestions getQuestions={getQuestions}></SetQuestions></Route>
       </Router>
     </div>
   );

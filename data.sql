@@ -17,11 +17,11 @@ CREATE TABLE "questions" (
   "question" text not null,
   "required" boolean default false,
   "type" text not null
-)
+);
 
 INSERT INTO "questions" ("question", "required", "type")
-VALUES ("How are you feeling today?", true, "rating"),
-("How well are you understanding the content?", true, "rating"),
-("How well are you being supported?", true, "rating"),
-("How well are you going to grade this assignment?", true, "rating"),
-("Any additional comments?", false, "text");
+VALUES ('How are you feeling today?', true, 'rating'),
+('How well are you understanding the content?', true, 'rating'),
+('How well are you being supported?', true, 'rating'),
+('How well are you going to grade this assignment?', true, 'rating'),
+('Any additional comments?', false, 'text');

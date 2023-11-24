@@ -57,10 +57,18 @@ const responses = (state = [], action) => {
     return state;
 }
 
+const questions = (state = [], action) => {
+    if (action.type === "GET_QUESTIONS"){
+        return action.payload;
+    }
+    return state;
+}
+
 const reduxStore = createStore(
     combineReducers({
         feedback,
-        responses
+        responses,
+        questions
     }),
     applyMiddleware(logger)
 )
