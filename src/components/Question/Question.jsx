@@ -11,30 +11,55 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
-function Question(topProps){
+function Question(props){
     let history = useHistory();
     const [rating, setRating] = useState("");
+    const [comments, setComments] = useState("");
     const dispatch = useDispatch();
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (Number(rating) > 0 && Number(rating) <= 10 && Number.isInteger(Number(rating))){
-            dispatch({
-                type: `QUESTION_${topProps.questionNumber}`,
-                payload: {question: topProps.questionText, rating: Number(rating)}
-            });
-            setRating("");
-            history.push(`/${Number(topProps.questionNumber) + 1}`)
+        if (props.type == "rating"){
+            if (Number(rating) > 0 && Number(rating) <= 10 && Number.isInteger(Number(rating))){
+                let action = {
+                    type: "ADD_FEEDBACK",
+                    payload: {
+                        question: props.questionText,
+                        rating: Number(rating),
+                        type: "rating"
+                    }
+                };
+                dispatch(action);
+                setRating("");
+                if (props.lastQuestion == true){
+                    history.push('/review');
+                }
+            }
+            else {
+                alert("Rating must be an integer 1-10");
+            }
         }
-        else {
-            alert("Rating must be an integer 1-10");
+        else if (props.type == "text"){
+            let action = {
+                type: "ADD_FEEDBACK",
+                payload: {
+                    question: props.questionText,
+                    rating: comments,
+                    type: "text"
+                }
+            };
+            dispatch(action);
+            setComments("");
+            if (props.lastQuestion == true){
+                history.push('/review');
+            }
         }
     }
 
-    function CircularProgressWithLabel(props) {
+    function CircularProgressWithLabel(cirprops) {
         return (
           <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-            <CircularProgress sx={{color: topProps.circleColor}} variant="determinate" {...props} />
+            <CircularProgress sx={{color: props.circleColor}} variant="determinate" {...cirprops} />
             <Box
               sx={{
                 top: 0,
@@ -48,49 +73,87 @@ function Question(topProps){
               }}
             >
               <Typography variant="caption" component="div" color="text.secondary">
-                {`${topProps.percentText}%`}
+                {`${props.percentText}%`}
               </Typography>
             </Box>
           </Box>
         );
     }
-    return(
-        <div>
-            <Card sx={{maxwidth: 550}}>
-                <CardContent>
-                    <CircularProgressWithLabel value={topProps.circleFillPercent} />
-                    <br></br>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {topProps.questionText}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Let us know how you are on a rating of 1 to 10.
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        One is TERRIBLE. Ten is AMAZING!
-                    </Typography>
-                    <br></br>
-                    <Box
-                        component="form"
-                        sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' },}}
-                        noValidate
-                        autoComplete="off">
-                        <TextField
-                            required={true}
-                            value={rating}
-                            type="number"
-                            id="outlined-required"
-                            label="*Required"
-                            placeholder="1-10"
-                            onChange={(e)=>setRating(e.target.value)}
-                        />
+
+    if (props.type == "rating"){
+        return(
+            <div>
+                <Card sx={{maxwidth: 550}}>
+                    <CardContent>
+                        <CircularProgressWithLabel value={props.circleFillPercent} />
                         <br></br>
-                        <Button onClick={handleSubmit} variant="contained" id="submit-btn">Next</Button>
-                    </Box>
-                </CardContent>
-            </Card>
-        </div>
-    )
+                        <Typography gutterBottom variant="h5" component="div">
+                            {props.questionText}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            {props.subquestion1}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            {props.subquestion2}
+                        </Typography>
+                        <br></br>
+                        <Box
+                            component="form"
+                            sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' },}}
+                            noValidate
+                            autoComplete="off">
+                            <TextField
+                                required={true}
+                                value={rating}
+                                type="number"
+                                id="outlined-required"
+                                label="*Required"
+                                placeholder="1-10"
+                                onChange={(e)=>setRating(e.target.value)}
+                            />
+                            <br></br>
+                            <Button onClick={handleSubmit} variant="contained" id="submit-btn">Next</Button>
+                        </Box>
+                    </CardContent>
+                </Card>
+            </div>
+        )
+    }
+    else if (props.type == "text"){
+        return(
+            <div>
+                <Card sx={{maxwidth: 550}}>
+                    <CardContent>
+                        <CircularProgressWithLabel value={80} />
+                        <br></br>
+                        <Typography gutterBottom variant="h5" component="div">
+                            Any additional comments?
+                        </Typography>
+                        <br></br>
+                        <Box
+                            component="form"
+                            sx={{ '& .MuiTextField-root': { m: 1, width: '50ch' },}}
+                            noValidate
+                            autoComplete="off">
+                            <TextField
+                                multiline
+                                rows={8}
+                                required={false}
+                                value={comments}
+                                type="text"
+                                id="outlined-multiline-flexible"
+                                label="Comments"
+                                placeholder="Comments"
+                                onChange={(e)=>setComments(e.target.value)}
+                            />
+                            <br></br>
+                            <Button onClick={handleSubmit} variant="contained" id="submit-btn">Next</Button>
+                        </Box>
+                    </CardContent>
+                </Card>
+            </div>
+        )
+    }
 }
 
 export default Question;

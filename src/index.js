@@ -1,36 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import logger from 'redux-logger';
 
 import './index.css';
 import App from './components/App/App';
 
-const feedback = (state = [{},{},{},{},{}], action) => {
-    if (action.type === "QUESTION_1"){
-        console.log("Question one:", action.payload);
-        return state.with(0,action.payload);
-    }
-    else if (action.type === "QUESTION_2"){
-        console.log("Question two:", action.payload);
-        return state.with(1,action.payload);
-    }
-    else if (action.type === "QUESTION_3"){
-        console.log("Question three:", action.payload);
-        return state.with(2,action.payload);
-    }
-    else if (action.type === "QUESTION_4"){
-        console.log("Question four:", action.payload);
-        return state.with(3,action.payload);
-    }
-    else if (action.type === "QUESTION_5"){
-        console.log("Question five:", action.payload);
-        return state.with(4,action.payload);
-    }
-    else if (action.type === "SUBMIT"){
-        return [{},{},{},{},{}];
+const feedback = (state = [], action) => {
+    if (action.type === "ADD_FEEDBACK"){
+        return [...state, action.payload]
     }
     else if (action.type === "UPDATE_FEEDBACK"){
         let idx = 0;
@@ -46,6 +26,19 @@ const feedback = (state = [{},{},{},{},{}], action) => {
             idx += 1;
         }
         return retArray;
+    }
+    else if (action.type === "SUBMIT"){
+        return [];
+    }
+    return state;
+}
+
+const currentQuestion = (state = 1, action) => {
+    if (action.type === "ADD_FEEDBACK"){
+        return state + 1
+    }
+    else if (action.type === "SUBMIT"){
+        return 1;
     }
     return state;
 }
@@ -64,11 +57,20 @@ const questions = (state = [], action) => {
     return state;
 }
 
+const numQuestions = (state = 0, action) => {
+    if (action.type === "GET_QUESTIONS"){
+        return action.payload.length;
+    }
+    return state;
+}
+
 const reduxStore = createStore(
     combineReducers({
         feedback,
         responses,
-        questions
+        questions,
+        numQuestions,
+        currentQuestion
     }),
     applyMiddleware(logger)
 )

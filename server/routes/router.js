@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../modules/pool.js');
 
 router.get('/feedback', (req, res) => {
-    pool.query(`SELECT * FROM "feedback"`).then((result) =>{
+    pool.query(`SELECT * FROM "feedback" ORDER BY "date" DESC`).then((result) =>{
         res.send(result.rows);
         console.log("GET from '/feedback'");
     })

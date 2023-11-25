@@ -125,6 +125,7 @@ function SetQuestions (props){
                                 <MenuItem value={"rating"}>Rating</MenuItem>
                                 <MenuItem value={"text"}>Text</MenuItem>
                             </Select>
+                            <br></br>
                         <Button onClick={deleteQuestion} variant="contained" id="submit-btn">Submit</Button>
                         <br></br>
                         </FormControl>

@@ -105,11 +105,11 @@ function Review(props){
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table">
                             <TableHead>
-                                <TableRow>
-                                    <TableCell align="left">Question</TableCell>
-                                    <TableCell align="right">Rating</TableCell>
-                                    <TableCell align="center">New Rating</TableCell>
-                                    <TableCell align="center">Update</TableCell>
+                                <TableRow >
+                                    <TableCell sx={{fontWeight:"bold",textDecoration:"underline"}} align="center">Question</TableCell>
+                                    <TableCell sx={{fontWeight:"bold",textDecoration:"underline"}} align="center">Rating</TableCell>
+                                    <TableCell sx={{minWidth:200,fontWeight:"bold",textDecoration:"underline"}} align="center">New Rating</TableCell>
+                                    <TableCell sx={{fontWeight:"bold",textDecoration:"underline"}} align="center">Update</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -118,7 +118,7 @@ function Review(props){
                                         <TableCell align="left">{response.question}</TableCell>
                                         <TableCell align="center">{response.rating}</TableCell>
                                         <TableCell align="center">
-                                           {response.question == "Comments:" ?
+                                           {response.type == "text" ?
                                                 <TextField
                                                     multiline
                                                     rows ={8}

@@ -91,7 +91,6 @@ function Admin(props){
                                         return (
                                             <TableRow key={index}>
                                                 <TableCell align="center">
-                                                    <Flag sx={{color:"green"}}id="flag-icon"/>
                                                 </TableCell>
                                                 <TableCell align="center">
                                                     <Button variant="contained" onClick={()=>toggleFlag(response.id)}>Toggle Flag</Button>
