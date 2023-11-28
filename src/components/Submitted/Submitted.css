@@ -1,3 +1,11 @@
 img {
     width:250px;
 }
+
+#submit-card {
+    width: 95vw;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom/client';
 
 import { Provider, useSelector } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import { takeEvery, put, take } from 'redux-saga/effects';
 import logger from 'redux-logger';
 
 import './index.css';
 import App from './components/App/App';
+import axios from 'axios';
+
+// Reducers below
 
 const feedback = (state = [], action) => {
     if (action.type === "ADD_FEEDBACK"){
@@ -50,7 +55,7 @@ const responses = (state = [], action) => {
     return state;
 }
 
-const questions = (state = [], action) => {
+const questions = (state = [{}], action) => {
     if (action.type === "GET_QUESTIONS"){
         return action.payload;
     }
@@ -64,17 +69,41 @@ const numQuestions = (state = 0, action) => {
     return state;
 }
 
+// Functions for Sagas
+
+const sagaMiddleware = createSagaMiddleware();
+
+function* fetchQuestions(){
+    try {
+        const response = yield axios.get('/questions');
+        const action = {
+            type: "GET_QUESTIONS",
+            payload: response.data
+        };
+        yield put(action);
+    }
+    catch (error) {
+        console.error("Error in GET '/feedback'.", error);
+        alert("Error in GET '/feedback'. See console.");
+    }
+}
+
 const reduxStore = createStore(
     combineReducers({
         feedback,
         responses,
         questions,
         numQuestions,
-        currentQuestion
+        currentQuestion,
     }),
-    applyMiddleware(logger)
+    applyMiddleware(sagaMiddleware,logger)
 )
 
+function* rootSaga(){
+    yield takeEvery("FETCH_QUESTIONS", fetchQuestions);
+}
+
+sagaMiddleware.run(rootSaga);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>

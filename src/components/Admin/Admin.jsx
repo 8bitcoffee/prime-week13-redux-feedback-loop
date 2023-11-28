@@ -13,7 +13,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
-import { Flag } from '@mui/icons-material';
+import { Flag, DeleteForever } from '@mui/icons-material';
 
 
 function Admin(props){
@@ -31,6 +31,10 @@ function Admin(props){
         })
     }
 
+    /**
+     * 
+     * @param {Number} id 
+     */
     const toggleFlag = (id) => {
         axios.put(`/feedback/${id}`).then((response) =>{
             console.log("Flag toggled.", responses);
@@ -74,7 +78,7 @@ function Admin(props){
                                                     <Flag sx={{color:"red"}}id="flag-icon"/>
                                                 </TableCell>
                                                 <TableCell align="center">
-                                                    <Button variant="contained" onClick={()=>toggleFlag(response.id)}>Toggle Flag</Button>
+                                                    <Button size="small" variant="contained" onClick={()=>toggleFlag(response.id)}>Toggle Flag</Button>
                                                 </TableCell>
                                                 <TableCell align="center">{response.feeling}</TableCell>
                                                 <TableCell align="center">{response.understanding}</TableCell>
@@ -82,7 +86,9 @@ function Admin(props){
                                                 <TableCell align="center">{response.grade}</TableCell>
                                                 <TableCell align="left">{response.comments}</TableCell>
                                                 <TableCell align="center">
-                                                    <Button onClick={()=>handleSubmit(response.id)} variant="contained" id="submit-btn">Delete</Button>
+                                                    <Button onClick={()=>handleSubmit(response.id)} variant="contained" id="submit-btn">
+                                                        <DeleteForever/>
+                                                    </Button>
                                                 </TableCell>
                                             </TableRow>
                                         )
@@ -93,7 +99,7 @@ function Admin(props){
                                                 <TableCell align="center">
                                                 </TableCell>
                                                 <TableCell align="center">
-                                                    <Button variant="contained" onClick={()=>toggleFlag(response.id)}>Toggle Flag</Button>
+                                                    <Button size="small" variant="contained" onClick={()=>toggleFlag(response.id)}>Toggle Flag</Button>
                                                 </TableCell>
                                                 <TableCell align="center">{response.feeling}</TableCell>
                                                 <TableCell align="center">{response.understanding}</TableCell>
@@ -101,7 +107,9 @@ function Admin(props){
                                                 <TableCell align="center">{response.grade}</TableCell>
                                                 <TableCell align="left">{response.comments}</TableCell>
                                                 <TableCell align="center">
-                                                    <Button onClick={()=>handleSubmit(response.id)} variant="contained" id="submit-btn">Delete</Button>
+                                                    <Button onClick={()=>handleSubmit(response.id)} variant="contained" id="submit-btn">
+                                                        <DeleteForever/>
+                                                    </Button>
                                                 </TableCell>
                                             </TableRow>
                                         )

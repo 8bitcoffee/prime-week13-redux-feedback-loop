@@ -53,18 +53,36 @@ router.delete('/feedback/:id', (req,res) => {
 
 // -----------------
 
-router.post('/questions', (req,res) => {
-    let queryText = `INSERT INTO "questions" ("question", "required", "type")
-    VALUES ($1, $2, $3)`;
-    pool.query(queryText,[req.body.question, req.body.required, req.body.type]).then(() =>{
-        res.sendStatus(201);
-        console.log("POST to '/questions'");
-    })
-    .catch((error) => {
-        console.error(`Error in POST to '/questions'.`, error);
-        alert("Error in POST '/questions'. See console.");
-    })
-})
+// router.post('/questions', (req,res) => {
+//     let queryText = `INSERT INTO "questions" ("question", "abbreviation", "required", "type")
+//     VALUES ($1, $2, $3, $4);`;
+
+//     pool.query(queryText,[req.body.question, req.body.abbreviation, req.body.required, req.body.type]).then(() =>{
+//         console.log("first added");
+//         res.sendStatus(201);
+//     })
+//     .catch((error) => {
+//         console.error(`Error in POST to '/questions'.`, error);
+//         alert("Error in POST '/questions'. See console.");
+//     })
+
+//     if (req.body.type == "text"){
+//         queryText = `ALTER TABLE "feedback"
+//         ADD COLUMN $1 TEXT;`;
+//     }
+//     else if (req.body.type == "rating"){
+//         queryText = `ALTER TABLE "feedback"
+//         ADD COLUMN "$1" INT;`;
+//     }
+//     pool.query(queryText,[req.body.abbreviation]).then(()=>{
+//         console.log("Question added");
+//         res.sendStatus(201);
+//     })
+//     .catch((error) => {
+//         console.error(`Error in POST to '/questions'.`, error);
+//         alert("Error in POST '/questions'. See console.");
+//     })
+// })
 
 router.get('/questions', (req,res) => {
     pool.query(`SELECT * FROM "questions"`).then((result) =>{
@@ -78,14 +96,26 @@ router.get('/questions', (req,res) => {
     })
 })
 
-router.delete('/questions/:id', (req,res) => {
-    pool.query('DELETE FROM "questions" WHERE id=$1', [req.params.id]).then((result) => {
-        console.log(`DELETE at '/questions/${req.params.id}'`);
-        res.sendStatus(200);
-    }).catch((error) => {
-        console.error(`Error in DELETE '/questions/:id'.`, error);
-        res.sendStatus(500);
-    })
-})
+// router.delete('/questions/:id', (req,res) => {
+//     pool.query('DELETE FROM "questions" WHERE id=$1;', [req.params.id]).then((result) => {
+//         console.log(`DELETE at '/questions/${req.params.id}'`);
+//         res.sendStatus(200);
+//     })
+//     .catch((error) => {
+//         console.error(`Error in DELETE '/questions/:id'.`, error);
+//         res.sendStatus(500);
+//     })
+// })
+
+// router.delete('/questions/abbrev/:abbrev',(req,res) => {
+//     pool.query('ALTER TABLE "feedback" DROP COLUMN "$1" CASCADE;',[req.params.abbrev]).then((result) =>{
+//         console.log(`DELETE at '/questions/abbrev/${req.params.abbrev}'`);
+//         res.sendStatus(200);
+//     })
+//     .catch((error) => {
+//         console.error(`Error in DELETE '/questions/abbrev/:abbrev'.`, error);
+//         res.sendStatus(500);
+//     })
+// })
 
 module.exports = router;

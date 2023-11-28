@@ -1,15 +1,26 @@
 import React from 'react';
 import './QuestionPage.css';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Question from '../Question/Question';
 
 function QuestionPage (){
+    const dispatch = useDispatch();
+    const getQuestions = () => {
+        dispatch({type: "FETCH_QUESTIONS"})
+    }
+
+    useEffect(() => {
+        getQuestions();
+        console.log(questions);
+    }, []);
+
     const feedback = useSelector(store => store.feeback);
     const questions = useSelector(store => store.questions);
-    console.log(questions);
     const numQuestions = useSelector(store => store.numQuestions);
     const currentQuestion = useSelector(store => store.currentQuestion);
     // return (<></>)
+    console.log(questions);
     if (currentQuestion == numQuestions){
         if (questions[currentQuestion-1].type == "rating"){
             return(

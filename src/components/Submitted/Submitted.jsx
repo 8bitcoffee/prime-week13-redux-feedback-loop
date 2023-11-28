@@ -1,18 +1,24 @@
 import React from 'react';
 import './Submitted.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import { Paper } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 function Submitted(){
     let history = useHistory()
 
     return(
-        <div>
-            <h3>Woooo!!! You did it!</h3>
+        <Card id="submit-card" component={Paper}>
+            <Typography gutterBottom variant='h3'>Woooo!!! You did it!</Typography>
             <p>Here's a pic because you're one cool cat.</p>
             <img src='images/cool-cat.jpg'/>
             <p>If you want to submit more feedback, click here to start a new form.</p>
-            <button onClick={()=>history.push('/')}>Submit more feedback!</button>
-        </div>
+            <Button variant="contained" onClick={()=>history.push('/')}>Submit more feedback!</Button>
+        </Card>
     )
 }
 

@@ -83,7 +83,7 @@ function Question(props){
     if (props.type == "rating"){
         return(
             <div>
-                <Card sx={{maxwidth: 550}}>
+                <Card id="question" sx={{maxwidth: 550}}>
                     <CardContent>
                         <CircularProgressWithLabel value={props.circleFillPercent} />
                         <br></br>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -22,17 +22,44 @@ import Select from '@mui/material/Select';
 
 function SetQuestions (props){
     const questions = useSelector(store => store.questions);
-    const dispatch = useDispatch();
     const [newQuestion, setNewQuestion] = useState("");
+    const [newAbbreviation, setNewAbbreviation] = useState("")
     const [newRequired, setNewRequired] = useState("");
     const [newType, setNewType] = useState("");
-    const deleteQuestion = (id) => {
+
+    const deleteQuestion = (id, abbreviation) => {
         axios.delete(`/questions/${id}`).then((response) => {
             console.log("DELETE '/questions")
             props.getQuestions();
         })
         .catch((error) => {
             console.error("Error in DELETE '/question'", error);
+            alert("Something went wrong");
+        })
+        axios.delete(`/questions/abbrev/${abbreviation}`).then((response) => {
+            console.log("DELETE '/questions")
+            props.getQuestions();
+        })
+        .catch((error) => {
+            console.error("Error in DELETE '/question'", error);
+            alert("Something went wrong");
+        })
+
+    }
+
+    const addQuestion = () => {
+        let questionInfo = {
+            question: newQuestion,
+            abbreviation: newAbbreviation,
+            required: newRequired,
+            type: newType
+        };
+        axios.post('/questions', questionInfo).then((response) =>{
+            console.log("POST to '/questions'");
+            props.getQuestions();
+        })
+        .catch((error) => {
+            console.error("Error in POST '/question'", error);
             alert("Something went wrong");
         })
     }
@@ -51,7 +78,8 @@ function SetQuestions (props){
                             <TableHead>
                                 <TableRow>
                                     <TableCell align="left">Question</TableCell>
-                                    <TableCell align="right">Required?</TableCell>
+                                    <TableCell align="center">Abbreviation</TableCell>
+                                    <TableCell align="center">Required?</TableCell>
                                     <TableCell align="center">Reponse type</TableCell>
                                     <TableCell align="center">Delete</TableCell>
                                 </TableRow>
@@ -60,10 +88,11 @@ function SetQuestions (props){
                                 {questions.map((response) => 
                                     <TableRow key={response.id}>
                                         <TableCell align="left">{response.question}</TableCell>
+                                        <TableCell align="center">{response.abbreviation}</TableCell>
                                         <TableCell align="center">{String(response.required)}</TableCell>
                                         <TableCell align="center">{response.type}</TableCell>
                                         <TableCell align="center">
-                                            <Button onClick={()=>deleteQuestion(response.id)} variant="contained" id="update-btn">Delete</Button>
+                                            <Button onClick={()=>deleteQuestion(response.id,response.abbreviation)} variant="contained" id="update-btn">Delete</Button>
                                         </TableCell>
                                     </TableRow>
                                 )}
@@ -82,8 +111,21 @@ function SetQuestions (props){
                             type="text"
                             id="outlined-required"
                             label="Question"
-                            placeholder="1-10"
+                            placeholder="Question"
                             onChange={(e)=>setNewQuestion(e.target.value)}
+                            sx={{marginLeft:5,marginRight:5}}
+                        />
+                        </FormControl>
+                        <FormControl fullWidth>
+                        <br></br>
+                        <TextField
+                            required={true}
+                            value={newAbbreviation}
+                            type="text"
+                            id="outlined-required"
+                            label="Abbreviation"
+                            placeholder="Abbreviation"
+                            onChange={(e)=>setNewAbbreviation(e.target.value)}
                             sx={{marginLeft:5,marginRight:5}}
                         />
                         </FormControl>
@@ -126,7 +168,7 @@ function SetQuestions (props){
                                 <MenuItem value={"text"}>Text</MenuItem>
                             </Select>
                             <br></br>
-                        <Button onClick={deleteQuestion} variant="contained" id="submit-btn">Submit</Button>
+                        <Button onClick={addQuestion} variant="contained" id="submit-btn">Submit</Button>
                         <br></br>
                         </FormControl>
                     </Box>
