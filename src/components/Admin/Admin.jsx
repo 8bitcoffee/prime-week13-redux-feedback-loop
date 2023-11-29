@@ -15,10 +15,19 @@ import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { Flag, DeleteForever } from '@mui/icons-material';
 
-
+/**
+ * Displays the responses pulled from the database and saved in redux.
+ * Options to flag/unflag and delete responses. Responses are ordered chronologically
+ * @param {Object} props 
+ * @returns 
+ */
 function Admin(props){
     const responses = useSelector(store => store.responses);
     
+    /**
+     * Handles the click of the delete button. Removes the response from the database
+     * and then gets the new responses list from the database.
+     */
     const handleSubmit = (id) => {
         axios.delete(`/feedback/${id}`).then((response) =>{
             console.log("Feedback deleted.", responses);
@@ -32,7 +41,8 @@ function Admin(props){
     }
 
     /**
-     * 
+     * Toggle adding or removing a flag on a responses.
+     * Updated responses are then fetched from database
      * @param {Number} id 
      */
     const toggleFlag = (id) => {
@@ -59,6 +69,7 @@ function Admin(props){
                         <Table aria-label="simple table">
                             <TableHead>
                                 <TableRow>
+                                    {/* Will need to be changed to a .map() with SetQuestions component live */}
                                     <TableCell align="center">Flag</TableCell>
                                     <TableCell align="center">Toggle Flag</TableCell>
                                     <TableCell align="center">Feeling</TableCell>

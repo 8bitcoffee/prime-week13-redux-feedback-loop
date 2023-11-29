@@ -15,6 +15,9 @@ function App() {
 
   const dispatch = useDispatch();
 
+  /**
+   * responses are the historical responses saved in the database
+   */
   const getResponses = () =>{
     axios.get('/feedback').then((response) => {
       console.log(`GET from '/feedback`);
@@ -29,6 +32,7 @@ function App() {
     })
   }
 
+  // On (re)load, loads responses. Did have questions there as well, but moved the questions to a saga.
   useEffect(()=>{
     getResponses();
   },[]);
@@ -40,6 +44,7 @@ function App() {
         <h4>Don't forget it!</h4>
       </header>
       <Router>
+        {/* Nav was used for development*/}
         {/* <nav>
           <ul>
             <li><Link to='/'>QuestionPage</Link></li>
@@ -49,11 +54,11 @@ function App() {
             <li><Link to='/setquestions'>Set Questions</Link></li>
           </ul>
         </nav> */}
-        <Route exact path='/'><QuestionPage/></Route>
-        <Route exact path='/review'><Review getResponses={getResponses}/></Route>
-        <Route exact path='/submitted'><Submitted/></Route>
-        <Route exact path='/admin'><Admin getResponses={getResponses}/></Route>
-        <Route exact path='/setquestions'><SetQuestions/></Route>
+        <Route exact path='/'><QuestionPage/></Route> {/* Page where all the questions spawn */}
+        <Route exact path='/review'><Review getResponses={getResponses}/></Route> {/* Page to review answers before submitting */}
+        <Route exact path='/submitted'><Submitted/></Route> {/* Confirmation of submission */}
+        <Route exact path='/admin'><Admin getResponses={getResponses}/></Route> {/* Page to view the historical responses and flag feedback*/}
+        <Route exact path='/setquestions'><SetQuestions/></Route> {/* Abandoned form for changing the questions on the database. Maybe revisit after we're done with SQL join lectures */}
       </Router>
       <Footer />
     </div>

@@ -1,8 +1,10 @@
+/* Submit button that adds the form info to redux and sends to next question */
 #submit-btn {
     margin-right: auto;
     margin-left: auto
 }
 
+/* MUI Card displaying the question, form, and submit buttton */
 #question {
     max-width: 95vw;
     margin-right: auto;

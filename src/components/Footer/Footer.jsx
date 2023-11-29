@@ -1,6 +1,9 @@
 import React from 'react';
 import './Footer.css';
 
+/**
+ * @returns you guessed it... a footer
+ */
 function Footer () {
     return(
         <div>

@@ -11,12 +11,23 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
+/**
+ * Displays a question, form for responding, and submit button.
+ * If it is the last question, will forward to review page
+ * @param {Object} props 
+ * @returns 
+ */
 function Question(props){
-    let history = useHistory();
-    const [rating, setRating] = useState("");
-    const [comments, setComments] = useState("");
+    let history = useHistory(); // For forwarding to next page if needed
+    const [rating, setRating] = useState(""); // Number from form if type is "rating"
+    const [comments, setComments] = useState(""); // String from form if type is "text"
     const dispatch = useDispatch();
     
+    /**
+     * Form validation followed by storing responses in redux.
+     * Sends to review page if on last question.
+     * @param {Object} e // Event object
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
         if (props.type == "rating"){
@@ -56,6 +67,11 @@ function Question(props){
         }
     }
 
+    /**
+     * Circular progress bar with percent text in the center
+     * @param {Object} cirprops 
+     * @returns 
+     */
     function CircularProgressWithLabel(cirprops) {
         return (
           <Box sx={{ position: 'relative', display: 'inline-flex' }}>

@@ -8,6 +8,11 @@ import { Paper } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+/**
+ * Submit confirmation screen. Option to submit more sends back to home
+ * as well as resets reducers logging feedback
+ * @returns 
+ */
 function Submitted(){
     let history = useHistory()
 

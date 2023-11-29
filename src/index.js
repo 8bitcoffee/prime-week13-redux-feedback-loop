@@ -11,8 +11,11 @@ import './index.css';
 import App from './components/App/App';
 import axios from 'axios';
 
+// ---------------------------------
 // Reducers below
 
+
+// Holds repsonses to all questions in a session
 const feedback = (state = [], action) => {
     if (action.type === "ADD_FEEDBACK"){
         return [...state, action.payload]
@@ -38,6 +41,7 @@ const feedback = (state = [], action) => {
     return state;
 }
 
+// Keeps track of questions answered to display next one
 const currentQuestion = (state = 1, action) => {
     if (action.type === "ADD_FEEDBACK"){
         return state + 1
@@ -48,6 +52,7 @@ const currentQuestion = (state = 1, action) => {
     return state;
 }
 
+// Historical responses from database
 const responses = (state = [], action) => {
     if (action.type === "GET_RESPONSES"){
         return action.payload;
@@ -55,6 +60,7 @@ const responses = (state = [], action) => {
     return state;
 }
 
+// Questions stored in database
 const questions = (state = [{}], action) => {
     if (action.type === "GET_QUESTIONS"){
         return action.payload;
@@ -62,6 +68,7 @@ const questions = (state = [{}], action) => {
     return state;
 }
 
+// Total number of questions. Used for tracking
 const numQuestions = (state = 0, action) => {
     if (action.type === "GET_QUESTIONS"){
         return action.payload.length;
@@ -73,6 +80,7 @@ const numQuestions = (state = 0, action) => {
 
 const sagaMiddleware = createSagaMiddleware();
 
+// Gets the questions from the server
 function* fetchQuestions(){
     try {
         const response = yield axios.get('/questions');

@@ -1,7 +1,9 @@
+/* Cool cat pic */
 img {
     width:250px;
 }
 
+/* MUI card displaying the submit confirmation */
 #submit-card {
     width: 95vw;
     margin-right: auto;
